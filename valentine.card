@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>My Valentine 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #ffdee9, #fff1f5);
+  overflow-x: hidden;
+}
+
+/* Falling hearts */
+.heart {
+  position: fixed;
+  top: -10px;
+  font-size: 18px;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  to { transform: translateY(110vh); opacity: 0; }
+}
+
+/* Envelope */
+.envelope {
+  width: 300px;
+  margin: 40px auto;
+  text-align: center;
+}
+.envelope button {
+  padding: 10px 20px;
+  border: none;
+  background: #ff5c8a;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.letter {
+  display: none;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 15px;
+  font-family: 'Great Vibes', cursive;
+  font-size: 26px;
+}
+
+/* Music */
+.music {
+  text-align: center;
+  margin: 20px;
+}
+
+/* Gallery */
+.gallery img {
+  width: 100px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+/* Countdown */
+.countdown {
+  text-align: center;
+  font-size: 20px;
+  margin: 20px;
+}
+
+/* Borders */
+.border-floral {
+  border: 8px solid pink;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+/* Map */
+.map {
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+}
+.pin {
+  background: #ff5c8a;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  margin: 5px;
+  display: inline-block;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Music -->
+<div class="music">
+  🎵 <button onclick="toggleMusic()">Toggle Music</button>
+  <audio id="bgm" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2a7d7b19f7.mp3">
+  </audio>
+</div>
+
+<!-- Envelope -->
+<div class="envelope">
+  <button onclick="openEnvelope()">💌 Open My Letter</button>
+  <div class="letter" id="letter">
+    <textarea id="message" placeholder="Type your love message..." style="width:100%;height:80px;"></textarea>
+    <p id="preview"></p>
+  </div>
+</div>
+
+<!-- Countdown -->
+<div class="countdown" id="countdown"></div>
+
+<!-- Poem -->
+<div style="text-align:center;">
+  <button onclick="generatePoem()">✨ Generate Secret Poem</button>
+  <p id="poem" style="font-family:Great Vibes;font-size:24px;"></p>
+</div>
+
+<!-- Gallery -->
+<div class="gallery border-floral" style="text-align:center;">
+  <h3>📸 Our Memories</h3>
+  <input type="file" multiple accept="image/*" onchange="uploadPhotos(event)">
+  <div id="photos"></div>
+</div>
+
+<!-- Map -->
+<div class="map" style="margin:20px;">
+  <h3>📍 Our Special Places</h3>
+  <input type="text" id="place" placeholder="Add a memory location">
+  <button onclick="addPin()">Add Pin</button>
+  <div id="pins"></div>
+</div>
+
+<script>
+// Falling hearts
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = 3 + Math.random() * 5 + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 8000);
+}, 300);
+
+// Envelope
+function openEnvelope() {
+  document.getElementById("letter").style.display = "block";
+}
+document.getElementById("message")?.addEventListener("input", e => {
+  document.getElementById("preview").innerText = e.target.value;
+});
+
+// Music
+function toggleMusic() {
+  const m = document.getElementById("bgm");
+  m.paused ? m.play() : m.pause();
+}
+
+// Countdown
+function updateCountdown() {
+  const vday = new Date("Feb 14, 2026").getTime();
+  const now = new Date().getTime();
+  const diff = vday - now;
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  document.getElementById("countdown").innerText =
+    `⏳ ${days} days until Valentine’s Day`;
+}
+setInterval(updateCountdown, 1000);
+
+// Poem
+function generatePoem() {
+  const poems = [
+    "In every heartbeat, I find you.",
+    "You are my always and my forever.",
+    "Love blooms where your smile lives.",
+    "My heart chose you—every lifetime."
+  ];
+  document.getElementById("poem").innerText =
+    poems[Math.floor(Math.random() * poems.length)];
+}
+
+// Gallery
+function uploadPhotos(e) {
+  const container = document.getElementById("photos");
+  for (let file of e.target.files) {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    container.appendChild(img);
+  }
+}
+
+// Map pins
+function addPin() {
+  const place = document.getElementById("place").value;
+  if (!place) return;
+  const pin = document.createElement("div");
+  pin.className = "pin";
+  pin.innerText = place;
+  document.getElementById("pins").appendChild(pin);
+  document.getElementById("place").value = "";
+}
+</script>
+
+</body>
+</html>

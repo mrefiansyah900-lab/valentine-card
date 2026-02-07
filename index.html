@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Happy Valentine 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: pink;
+      text-align: center;
+    }
+    h1 {
+      color: #b3005e;
+    }
+    textarea {
+      width: 80%;
+      height: 80px;
+      border-radius: 10px;
+      border: none;
+      padding: 10px;
+    }
+    .card {
+      background: white;
+      margin: 30px;
+      padding: 20px;
+      border-radius: 20px;
+    }
+    button {
+      background: #ff4d88;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>💝 Happy Valentine 💝</h1>
+
+  <div class="card">
+    <p>Tulis pesan cintamu 💌</p>
+    <textarea oninput="preview.innerText=this.value" style="display:none;"></textarea>
+
+<p id="preview" style="
+  font-style: italic;
+  white-space: pre-line;
+  font-size: 16px;
+  color: #b3005e;
+">
+HAII HAII HAII, PACAR AKU YANG PALING AKU SAYANGGG HIHI.  
+AKUU MAW BILANGG TIMAKASIII BUATT KAMUU YANG SELALU SAYANG AKU WALAUPUN TIDAAA DI HARI KASI SAYANG DOANG.  
+AKU MAU BILANG MAKASI BUAT MAMAA KAMUU UDAAA NGELAHIRIN KAMU YANG CANTIK INI KE DUNIA.  
+PERJALANAN KITA SUDAAA 9 BULAN LOHH, WAKTU YANG GA LAMA DAN GA SEBENTAR JUGA.  
+SELAMA 9 BULAN INI KITAA SUDAAA MELEWATI HAL-HAL YANG SERU DAN GA SERU YAA,  
+TAPI UNTUNGNYA KITA LEWATIN BARENG-BARENG YAAA.  
+HAPPY VALENTINE DAY SAYANG AKUU 💖  
+CINTAAA AKUU  
+DUNIAA AKUUUU  
+SELALU SAMAAA AKUU TERUSS YAAA SELAMAA LAMAAANYAAA POKOKNYAAA.  
+JANGAN PERNAH TINGGALIN AKUUU.  
+KASI SAYANG AKU SELALU BUAT KAMUUU 😘🩷
+</p>
+
+  <div class="card">
+    <p>💖 Countdown Valentine</p>
+    <p id="countdown"></p>
+  </div>
+
+  <div class="card">
+    <button onclick="poem()">✨ Secret Love Poem</button>
+    <p id="poem"></p>
+  </div>
+
+<script>
+function poem() {
+  const p = [
+    "Aku memilihmu hari ini dan selamanya ❤️",
+    "Cintaku padamu tak pernah pulang 💕",
+    "Hatiku tenang saat bersamamu 💖"
+  ];
+  poem.innerText = p[Math.floor(Math.random()*p.length)];
+}
+
+function timer() {
+  const v = new Date("Feb 14, 2026").getTime();
+  const n = new Date().getTime();
+  const d = Math.floor((v-n)/(1000*60*60*24));
+  countdown.innerText = d + " hari lagi 💘";
+}
+setInterval(timer, 1000);
+</script>
+<div class="card">
+  <p>🎹 Instrumental Piano</p>
+  <button onclick="togglePiano()">▶ / ⏸ Play Music</button>
+</div>
+
+<script>
+let audioCtx;
+let playing = false;
+let interval;
+
+function playChord(freqs, time=1.5){
+  freqs.forEach(f => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "sine";
+    osc.frequency.value = f;
+    gain.gain.value = 0.05;
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + time);
+  });
+}
+
+function startMusic(){
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const chords = [
+    [261.6, 329.6, 392.0], // C
+    [293.7, 370.0, 440.0], // Dm
+    [329.6, 415.3, 493.9], // Em
+    [293.7, 349.2, 440.0]  // Dm7
+  ];
+  let i = 0;
+  interval = setInterval(() => {
+    playChord(chords[i]);
+    i = (i + 1) % chords.length;
+  }, 1800);
+}
+
+function stopMusic(){
+  clearInterval(interval);
+  audioCtx.close();
+}
+
+function togglePiano(){
+  if(!playing){
+    startMusic();
+    playing = true;
+  } else {
+    stopMusic();
+    playing = false;
+  }
+}
+</script>
+</body>
+</html>
